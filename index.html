@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kedai Jejaring Sosial | Coffee Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #5B3C25;
+            --secondary: #8D6E63;
+            --accent: #E57905;
+            --light: #F5F0E8;
+            --dark: #2A2118;
+            --cream: #FFF8E7;
+            --text: #3E2723;
+            --border-radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--light);
+            font-family: 'Poppins', sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .text-white {
+            color: white;
+        }
+
+        .cafe-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+        }
+
+        /* Header Section */
+        .cafe-header {
+            position: relative;
+            color: white;
+            overflow: hidden;
+            height: 500px;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.7);
+            transition: transform 8s ease;
+        }
+
+        .cafe-header:hover .hero-image {
+            transform: scale(1.05);
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.7));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .cafe-brand {
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .cafe-subtitle {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 300;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .cafe-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            font-weight: 700;
+            margin: 0.5rem 0 1rem;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            line-height: 1.1;
+            letter-spacing: 2px;
+        }
+
+        .cafe-tagline {
+            font-weight: 300;
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+            letter-spacing: 2px;
+        }
+
+        /* Navigation */
+        .nav-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: white;
+            padding: 0;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+            transition: var(--transition);
+        }
+
+        .nav-container.sticky {
+            box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+        }
+
+        .menu-tabs {
+            display: flex;
+            overflow-x: auto;
+            margin: 0;
+            padding: 0;
+            scrollbar-width: none; /* For Firefox */
+        }
+
+        .menu-tabs::-webkit-scrollbar {
+            display: none; /* For Chrome, Safari, and Opera */
+        }
+
+        .menu-tab {
+            padding: 1.2rem 1.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            color: var(--text);
+            font-size: 1rem;
+            position: relative;
+            transition: var(--transition);
+            flex: 1;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            overflow: hidden;
+        }
+
+        .menu-tab i {
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-tab:hover i {
+            transform: translateY(-3px);
+        }
+
+        .menu-tab:hover {
+            background-color: rgba(91, 60, 37, 0.05);
+            color: var(--accent);
+        }
+
+        .menu-tab.active {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .menu-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--accent);
+            animation: slideInLeft 0.3s ease forwards;
+        }
+
+        @keyframes slideInLeft {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+
+        /* Menu Content */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.6s ease;
+            padding: 3rem 0;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .menu-section {
+            padding: 0 2rem 2rem;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            font-size: 2.2rem;
+            text-align: center;
+            padding: 1rem 0;
+            margin: 0 0 3rem;
+            position: relative;
+            color: var(--primary);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .section-title:hover::after {
+            width: 120px;
+        }
+
+        /* Menu Items */
+        .menu-items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .menu-item {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            position: relative;
+            padding: 1.8rem;
+            border: 1px solid rgba(0,0,0,0.05);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .menu-item-header {
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .menu-item-title {
+            font-weight: 600;
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            font-family: 'Playfair Display', serif;
+            position: relative;
+            display: inline-block;
+        }
+
+        .menu-item-title::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .menu-item:hover .menu-item-title::after {
+            width: 100%;
+        }
+
+        .menu-item-desc {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 1rem;
+            min-height: 40px;
+            flex-grow: 1;
+        }
+
+        .price-options {
+            display: flex;
+            gap: 1rem;
+            margin-top: auto;
+        }
+
+        .price-option {
+            flex: 1;
+            text-align: center;
+            padding: 0.7rem;
+            border-radius: var(--border-radius);
+            background-color: var(--light);
+            position: relative;
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .price-option:hover {
+            transform: translateY(-3px);
+        }
+
+        .price-option.hot {
+            background-color: rgba(229, 121, 5, 0.1);
+        }
+
+        .price-option.cold {
+            background-color: rgba(91, 60, 37, 0.1);
+        }
+
+        .price-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: translateX(-100%);
+            transition: 0.6s;
+        }
+
+        .price-option:hover::before {
+            transform: translateX(100%);
+        }
+
+        .price-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: block;
+            margin-bottom: 0.4rem;
+        }
+
+        .price {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .price-option.hot .price-label {
+            color: var(--accent);
+        }
+
+        .price-option.cold .price-label {
+            color: var(--primary);
+        }
+
+        .price-column {
+            margin-top: auto;
+            text-align: right;
+        }
+
+        /* Food Items */
+        .food-item {
+            display: flex;
+            align-items: flex-start;
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            margin-bottom: 2.5rem;
+            transition: var(--transition);
+        }
+
+        .food-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .food-image {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+            transition: transform 0.5s ease;
+        }
+
+        .food-item:hover .food-image {
+            transform: scale(1.1);
+        }
+
+        .food-details {
+            flex: 1;
+            padding: 1.5rem;
+        }
+
+        .food-item .menu-item-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .topping-options {
+            margin-top: 1.5rem;
+        }
+
+        .topping-label {
+            font-weight: 500;
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+            display: block;
+            color: var(--primary);
+        }
+
+        .topping-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.7rem;
+            padding: 0.7rem;
+            background-color: var(--light);
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .topping-option:hover {
+            background-color: rgba(229, 121, 5, 0.1);
+            transform: translateX(5px);
+        }
+
+        .topping-name {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .topping-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--accent);
+        }
+
+        .topping-price {
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        /* Featured Tag */
+        .featured-tag {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: var(--accent);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 3px 10px rgba(229, 121, 5, 0.3);
+            animation: pulse 2s infinite;
+            z-index: 2;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Cafe Ambiance Section */
+        .cafe-ambiance {
+            padding: 4rem 2rem;
+            background-color: var(--cream);
+            text-align: center;
+        }
+
+        .ambiance-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+        }
+
+        .ambiance-desc {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            font-size: 1.1rem;
+            color: var(--text);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            height: 250px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
+            color: white;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-caption {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Footer */
+        .cafe-footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .footer-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        .social-links {
+            margin: 2rem 0;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            margin: 0 0.7rem;
+            transition: var(--transition);
+        }
+
+        .social-link i {
+            font-size: 1.2rem;
+        }
+
+        .social-link:hover {
+            background-color: var(--accent);
+            transform: translateY(-5px) rotate(10deg);
+        }
+
+        .footer-tagline {
+            font-weight: 500;
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+        }
+
+        .footer-location {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .footer-location i {
+            color: var(--accent);
+        }
+
+        .footer-nav {
+            margin-top: 3rem;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-nav a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            font-size: 1rem;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .footer-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .footer-nav a:hover::after {
+            width: 100%;
+        }
+
+        .footer-nav a:hover {
+            opacity: 1;
+            color: var(--accent);
+        }
+
+        .copyright {
+            margin-top: 3rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(229, 121, 5, 0.4);
+            z-index: 100;
+        }
+
+        .scroll-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(229, 121, 5, 0.5);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .cafe-header {
+                height: 400px;
+            }
+            
+            .cafe-title {
+                font-size: 3.5rem;
+            }
+            
+            .menu-items-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .food-image {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .menu-tab {
+                padding: 1rem;
+            }
+            
+            .menu-section {
+                padding: 0 1rem 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .cafe-header {
+                height: 350px;
+            }
+            
+            .cafe-title {
+                font-size: 2.8rem;
+            }
+            
+            .cafe-subtitle {
+                font-size: 1rem;
+            }
+            
+            .food-item {
+                flex-direction: column;
+            }
+            
+            .food-image {
+                width: 100%;
+                height: 180px;
+                border-radius: var(--border-radius) var(--border-radius) 0 0;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .footer-logo {
+                font-size: 2rem;
+            }
+            
+            .footer-nav {
+                gap: 1rem;
+            }
+        }
+
+        /* Coffee Beans Animation */
+        .floating-bean {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%235B3C25' d='M512 56.8c0-31.4-25.4-56.8-56.8-56.8H56.8C25.4 0 0 25.4 0 56.8v113.6c0 70.1 26.8 132.8 69.9 181.1-43.1 48.3-69.9 111-69.9 181.1V608c0 31.4 25.4 56.8 56.8 56.8h398.4c31.4 0 56.8-25.4 56.8-56.8V532.6c0-70.1-26.8-132.8-69.9-181.1 43.1-48.3 69.9-111 69.9-181.1V56.8zM312 160c13.3 0 24 10.7 24 24s-10.7 24-24 24H200c-13.3 0-24-10.7-24-24s10.7-24 24-24H312zm0 144c13.3 0 24 10.7 24 24s-10.7 24-24 24H200c-13.3 0-24-10.7-24-24s10.7-24 24-24H312z'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.15;
+            z-index: 0;
+            animation: floatBean 15s linear infinite;
+        }
+
+        @keyframes floatBean {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.15;
+            }
+            90% {
+                opacity: 0.15;
+            }
+            100% {
+                transform: translate(100px, -100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating coffee beans animation -->
+    <div id="beanContainer"></div>
+
+    <div class="cafe-container">
+        <!-- Header Section -->
+        <header class="cafe-header">
+            <img src="image/cover.jpg" alt="Coffee Shop Atmosphere" class="hero-image">
+            <div class="overlay">
+                <div class="cafe-brand">
+                    <div class="cafe-subtitle">KEDAI</div>
+                    <h1 class="cafe-title">JEJARING SOSIAL</h1>
+                    <p class="cafe-tagline">TEMPAT BERTEMU DAN BERINTERAKSI</p>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Navigation -->
+        <nav class="nav-container">
+            <div class="menu-tabs">
+                <div class="menu-tab active" onclick="openTab('coffee')">
+                    <i class="fas fa-coffee"></i> Coffee
+                </div>
+                <div class="menu-tab" onclick="openTab('nonCoffee')">
+                    <i class="fas fa-mug-hot"></i> Non Coffee
+                </div>
+                <div class="menu-tab" onclick="openTab('food')">
+                    <i class="fas fa-utensils"></i> Food
+                </div>
+                <div class="menu-tab" onclick="openTab('desserts')">
+                    <i class="fas fa-cookie"></i> Desserts
+                </div>
+                <div class="menu-tab" onclick="openTab('snack')">
+                    <i class="fas fa-cheese"></i> Snack
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Coffee Menu -->
+        <div id="coffee" class="tab-content active">
+            <div class="menu-section">
+                <h2 class="section-title">Our Coffee Selection</h2>
+                
+                <div class="menu-items-grid">
+                    <div class="menu-item">
+                        <span class="featured-tag">Best Seller</span>
+                        <div class="menu-item-header">
+                            <div class="menu-item-title">Black Signal</div>
+                        </div>
+                        <div class="menu-item-desc">Seduhan espresso dengan ditambahkan air dan es</div>
+                        <div class="price-options">
+                            <div class="price-option cold">
+                                <span class="price-label">Ice</span>
+                                <span class="price">7K</span>
+                            </div>
+                            <div class="price-option hot">
+                                <span class="price-label">Hot</span>
+                                <span class="price">5K</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <div class="menu-item-title">Espresso shot</div>
+                        </div>
+                        <div class="menu-item-desc">Kopi yang dihasilkan dari proses penyeduhan kopi dengan tekanan dan suhu tinggi</div>
+                        <div class="price-options">
+                            <div class="price-option cold">
+                                <span class="price-label">Ice</span>
+                                <span class="price">10K</span>
+                            </div>
+                            <div class="price-option hot">
+                                <span class="price-label">Hot</span>
+                                <span class="price">8K</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <div class="menu-item-title">Cappucino</div>
+                        </div>
+                        <div class="menu-item-desc">Campuran espresso, steamed milk dan foam</div>
+                        <div class="price-options">
+                            <div class="price-option cold">
+                                <span class="price-label">Ice</span>
+                                <span class="price">12K</span>
+                            </div>
+                            <div class="price-option hot">
+                                <span class="price-label">Hot</span>
+                                <span class="price">7K</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <span class="featured-tag">Popular</span>
+                        <div class="menu-item-header">
+                            <div class="menu-item-title">Spanish latte</div>
+                        </div>
+                        <div class="menu-item-desc">Perpaduan espresso, condensed milk, foam</div>
+                        <div class="price-options">
+                            <div class="price-option cold">
+                                <span class="price-label">Ice</span>
+                                <span class="price">7K</span>
+                            </div>
+                            <div class="price-option hot">
+                                <span class="price-label">Hot</span>
+                                <span class="price">8K</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <div class="menu-item-title">Filter feels</div>
+                        </div>
+                        <div class="menu-item-desc">Penyeduhan kopi menggunakan kaettle dan dripper</div>
+                        <div class="price-options">
+                            <div class="price-option cold">
+                                <span class="price-label">Ice</span>
+                                <span class="price">10K</span>
+                            </div>
+                            <div class="price-option hot">
+                                <span class="price-label">Hot</span>
+                                <span class="price">10K</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <div class="menu-item-title">Butter talk</div>
+                        </div>
+                        <div class="menu-item-desc">Kopi yang disajikan dengan espresso, condensed milk dan butter</div>
+                        <div class="price-options">
+                            <div class="price-option cold">
+                                <span class="price-label">Ice</span>
+                                <span class="price">8K</span>
+                            </div>
+                            <div class="price-option hot">
+                                <span class="price-label">Hot</span>
+                                <span class="price">-</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <div class="menu-item-title">Sweet butterline</div>
+                        </div>
+                        <div class="menu-item-desc">Kombinasi espresso yang kuat dengan manisnya butterscotch</div>
+                        <div class="price-options">
+                            <div class="price-option cold">
+                                <span class="price-label">Ice</span>
+                                <span class="price">15K</span>
+                            </div>
+                            <div class="price-option hot">
+                                <span class="price-label">Hot</span>
+                                <span class="price">-</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <span class="featured-tag">Staff Pick</span>
+                        <div class="menu-item-header">
+                            <div class="menu-item-title">Aren sosial</div>
+                        </div>
+                        <div class="menu-item-desc">Racikan kopi espresso yang mengandung susu dan gula aren</div>
+                        <div class="price-options">
+                            <div class="price-option cold">
+                                <span class="price-label">Ice</span>
+                                <span class="price">7K</span>
+                            </div>
+                            <div class="price-option hot">
+                                <span class="price-label">Hot</span>
+                                <span class="price">-</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <div class="menu-item-title">Kopi tubruk santuy</div>
+                        </div>
+                        <div class="menu-item-desc">Kopi khas Indonesia yang dibuat dengan menuangkan air panas ke dalamm gelas</div>
+                        <div class="price-options">
+                            <div class="price-option cold">
+                                <span class="price-label">Ice</span>
+                                <span class="price">10K</span>
+                            </div>
+                            <div class="price-option hot">
+                                <span class="price-label">Hot</span>
+                                <span class="price">6K</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Non Coffee Menu -->
+        <div id="nonCoffee" class="tab-content">
+            <div class="menu-section">
+                <h2 class="section-title">Non-Coffee Beverages</h2>
+                
+                <div class="menu-items-grid">
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <div class="menu-item-title">Tea</div>
+                        </div>
+                        <div class="menu-item-desc">Classic tea brewed to perfection</div>
+                        <div class="price-options">
+                            <div class="price-option cold">
+                                <span class="price-label">Ice</span>
+                                <span class="price">7K</span>
+                            </div>
+                            <div class="price-option hot">
+                                <span class="price-label">Hot</span>
+                                <span class="price">5K</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <div class="menu-item-title">Lecy tea</div>
+                        </div>
+                        <div class="menu-item-desc">A refreshing tea blend with a twist</div>
+                        <div class="price-options">
+                            <div class="price-option cold">
+                                <span class="price-label">Ice</span>
+                                <span class="price">15K</span>
+                            </div>
+                            <div class="price-option hot">
+                                <span class="price-label">Hot</span>
+                                <span class="price">7K</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <span class="featured-tag">Favorite</span>
+                        <div class="menu-item-header">
+                            <div class="menu-item-title">Peach tea</div>
+                        </div>
+                        <div class="menu-item-desc">Sweet peach-infused tea, perfect for any season</div>
+                        <div class="price-options">
+                            <div class="price-option cold">
+                                <span class="price-label">Ice</span>
+                                <span class="price">10K</span>
+                            </div>
+                            <div class="price-option hot">
+                                <span class="price-label">Hot</span>
+                                <span class="price">8K</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <div class="menu-item-title">Teh tarik susu</div>
+                        </div>
+                        <div class="menu-item-desc">Malaysian pulled milk tea, rich and creamy</div>
+                        <div class="price-options">
+                            <div class="price-option cold">
+                                <span class="price-label">Ice</span>
+                                <span class="price">10K</span>
+                            </div>
+                            <div class="price-option hot">
+                                <span class="price-label">Hot</span>
+                                <span class="price">8K</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <div class="menu-item-title">Dancoewg</div>
+                        </div>
+                        <div class="menu-item-desc">Our signature specialty drink</div>
+                        <div class="price-options">
+                            <div class="price-option cold">
+                                <span class="price-label">Ice</span>
+                                <span class="price">12K</span>
+                            </div>
+                            <div class="price-option hot">
+                                <span class="price-label">Hot</span>
+                                <span class="price">10K</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <div class="menu-item-title">Extrajoss</div>
+                        </div>
+                        <div class="menu-item-desc">Energy booster for your day</div>
+                        <div class="price-options">
+                            <div class="price-option cold">
+                                <span class="price-label">Ice</span>
+                                <span class="price">7K</span>
+                            </div>
+                            <div class="price-option hot">
+                                <span class="price-label">Hot</span>
+                                <span class="price">-</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <div class="menu-item-title">Ovaltine susu</div>
+                        </div>
+                        <div class="menu-item-desc">Classic Ovaltine with milk, nostalgic and comforting</div>
+                        <div class="price-options">
+                            <div class="price-option cold">
+                                <span class="price-label">Ice</span>
+                                <span class="price">7K</span>
+                            </div>
+                            <div class="price-option hot">
+                                <span class="price-label">Hot</span>
+                                <span class="price">-</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <span class="featured-tag">Kids' Fav</span>
+                        <div class="menu-item-header">
+                            <div class="menu-item-title">Milo dino</div>
+                        </div>
+                        <div class="menu-item-desc">Rich Milo beverage topped with Milo powder</div>
+                        <div class="price-options">
+                            <div class="price-option cold">
+                                <span class="price-label">Ice</span>
+                                <span class="price">10K</span>
+                            </div>
+                            <div class="price-option hot">
+                                <span class="price-label">Hot</span>
+                                <span class="price">-</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <div class="menu-item-title">Cendolink</div>
+                        </div>
+                        <div class="menu-item-desc">A unique beverage inspired by local flavors</div>
+                        <div class="price-options">
+                            <div class="price-option cold">
+                                <span class="price-label">Ice</span>
+                                <span class="price">8K</span>
+                            </div>
+                            <div class="price-option hot">
+                                <span class="price-label">Hot</span>
+                                <span class="price">6K</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <div class="menu-item-title">Coffee beer</div>
+                        </div>
+                        <div class="menu-item-desc">Non-alcoholic coffee-flavored beverage</div>
+                        <div class="price-options">
+                            <div class="price-option cold">
+                                <span class="price-label">Ice</span>
+                                <span class="price">10K</span>
+                            </div>
+                            <div class="price-option hot">
+                                <span class="price-label">Hot</span>
+                                <span class="price">8K</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <div class="menu-item-title">Air Mineral</div>
+                        </div>
+                        <div class="menu-item-desc">Pure mineral water</div>
+                        <div class="price-options">
+                            <div class="price-option cold">
+                                <span class="price-label">Ice</span>
+                                <span class="price">5K</span>
+                            </div>
+                            <div class="price-option hot">
+                                <span class="price-label">Hot</span>
+                                <span class="price">5K</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h2 class="section-title">Paket Drink</h2>
+                <!-- Add paket drink items here if available -->
+            </div>
+        </div>
+        
+        <!-- Food Menu -->
+        <div id="food" class="tab-content">
+            <div class="menu-section">
+                <h2 class="section-title">Food Menu</h2>
+                
+                <div class="food-item">
+                    <img src="image/nasibakar.jpeg" alt="Nasi Bakar Taichan" class="food-image">
+                    <div class="food-details">
+                        <div class="menu-item-title">Nasi Bakar Taichan <span class="price">15K</span></div>
+                        <div class="menu-item-desc">Nasi berbumbu dibungkus daun pisang dan dibakar hingga harum dan lezat</div>
+                    </div>
+                </div>
+                
+                <div class="food-item">
+                    <img src="image/indomie.jpg" alt="Indomie All Variant" class="food-image">
+                    <div class="food-details">
+                        <div class="menu-item-title">Indomie All Variant <span class="price">6K</span></div>
+                        <div class="menu-item-desc">Indomie diperkenalkan pada tahun 1983 dengan rasanya yang khas dan beragam</div>
+                        
+                        <div class="topping-options">
+                            <span class="topping-label">Add-ons:</span>
+                            <div class="topping-option">
+                                <div class="topping-name">
+                                    <span class="topping-dot"></span>
+                                    <span>Telor/ Sosis/ Cireng</span>
+                                </div>
+                                <span class="topping-price">4K</span>
+                            </div>
+                            <div class="topping-option">
+                                <div class="topping-name">
+                                    <span class="topping-dot"></span>
+                                    <span>Omlet</span>
+                                </div>
+                                <span class="topping-price">5K</span>
+                            </div>
+                            <div class="topping-option">
+                                <div class="topping-name">
+                                    <span class="topping-dot"></span>
+                                    <span>Nasi</span>
+                                </div>
+                                <span class="topping-price">5K</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Desserts Menu -->
+        <div id="desserts" class="tab-content">
+            <div class="menu-section">
+                <h2 class="section-title">Sweet Treats</h2>
+                
+                <div class="food-item">
+                    <img src="image/puddingcaramel.jpg" alt="Puding Caramel" class="food-image">
+                    <div class="food-details">
+                        <div class="menu-item-title">Puding Caramel <span class="price">10K</span></div>
+                        <div class="menu-item-desc">Smooth and creamy caramel pudding, the perfect sweet indulgence</div>
+                    </div>
+                </div>
+                
+                <div class="food-item">
+                    <img src="image/ketanoriginal.jpg" alt="Ketan Original" class="food-image">
+                    <div class="food-details">
+                        <div class="menu-item-title">Ketan Original <span class="price">8K</span></div>
+                        <div class="menu-item-desc">Traditional sticky rice, a classic Indonesian treat</div>
+                        
+                        <div class="topping-options">
+                            <span class="topping-label">Toppings:</span>
+                            <div class="topping-option">
+                                <div class="topping-name">
+                                    <span class="topping-dot"></span>
+                                    <span>Susu</span>
+                                </div>
+                                <span class="topping-price">4K</span>
+                            </div>
+                            <div class="topping-option">
+                                <div class="topping-name">
+                                    <span class="topping-dot"></span>
+                                    <span>Keju</span>
+                                </div>
+                                <span class="topping-price">5K</span>
+                            </div>
+                            <div class="topping-option">
+                                <div class="topping-name">
+                                    <span class="topping-dot"></span>
+                                    <span>Ovaltine</span>
+                                </div>
+                                <span class="topping-price">5K</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="food-item">
+                    <img src="image/rotibakar.jpg" alt="Roti Bakar Original" class="food-image">
+                    <div class="food-details">
+                        <div class="menu-item-title">Roti Bakar Original <span class="price">8K</span></div>
+                        <div class="menu-item-desc">Toasted bread, a simple yet satisfying snack</div>
+                        
+                        <div class="topping-options">
+                            <span class="topping-label">Toppings:</span>
+                            <div class="topping-option">
+                                <div class="topping-name">
+                                    <span class="topping-dot"></span>
+                                    <span>Susu</span>
+                                </div>
+                                <span class="topping-price">4K</span>
+                            </div>
+                            <div class="topping-option">
+                                <div class="topping-name">
+                                    <span class="topping-dot"></span>
+                                    <span>Keju</span>
+                                </div>
+                                <span class="topping-price">5K</span>
+                            </div>
+                            <div class="topping-option">
+                                <div class="topping-name">
+                                    <span class="topping-dot"></span>
+                                    <span>Coklat</span>
+                                </div>
+                                <span class="topping-price">5K</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Snack Menu -->
+        <div id="snack" class="tab-content">
+            <div class="menu-section">
+                <h2 class="section-title">Light Bites</h2>
+                
+                <div class="menu-items-grid">
+                    <div class="menu-item">
+                        <span class="featured-tag">Popular</span>
+                        <div class="menu-item-header">
+                            <div class="menu-item-title">Tahu Cabe Garam</div>
+                        </div>
+                        <div class="menu-item-desc">Crispy tofu with chili and salt seasoning</div>
+                        <div class="price-column">
+                            <span class="price">15K</span>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <div class="menu-item-title">Kentang Goreng</div>
+                        </div>
+                        <div class="menu-item-desc">Crispy golden french fries</div>
+                        <div class="price-column">
+                            <span class="price">12K</span>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <div class="menu-item-title">Cireng Goreng</div>
+                        </div>
+                        <div class="menu-item-desc">Fried tapioca starch fritters, a traditional Sundanese snack</div>
+                        <div class="price-column">
+                            <span class="price">15K</span>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <div class="menu-item-title">Sosis Goreng</div>
+                        </div>
+                        <div class="menu-item-desc">Fried sausages, perfect with our dipping sauces</div>
+                        <div class="price-column">
+                            <span class="price">10K</span>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <span class="featured-tag">Best Share</span>
+                        <div class="menu-item-header">
+                            <div class="menu-item-title">Mix Plater</div>
+                        </div>
+                        <div class="menu-item-desc">Assortment of our favorite snacks on one plate</div>
+                        <div class="price-column">
+                            <span class="price">10K</span>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <div class="menu-item-title">Kulit Ayam</div>
+                        </div>
+                        <div class="menu-item-desc">Crispy chicken skin, seasoned to perfection</div>
+                        <div class="price-column">
+                            <span class="price">15K</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Coffee Shop Ambiance Section -->
+        <section class="cafe-ambiance">
+            <h2 class="ambiance-title">Experience Our Atmosphere</h2>
+            <p class="ambiance-desc">Kedai Jejaring Sosial is more than just a coffee shop - it's a place to connect, create memories, and enjoy life's simple pleasures in a warm, inviting environment.</p>
+            
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Y29mZmVlJTIwc2hvcHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60" alt="Coffee Shop Interior" class="gallery-img">
+                    <div class="gallery-caption">Our cozy interior</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8cGVvcGxlJTIwY29mZmVlJTIwc2hvcHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60" alt="Friends at Coffee Shop" class="gallery-img">
+                    <div class="gallery-caption">Connect with friends</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Y29mZmVlJTIwYXJ0fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60" alt="Coffee Art" class="gallery-img">
+                    <div class="gallery-caption">Our signature coffee art</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1559305616-3f99cd43e353?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8Y29mZmVlJTIwYmVhbnN8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60" alt="Coffee Beans" class="gallery-img">
+                    <div class="gallery-caption">Premium coffee beans</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer class="cafe-footer">
+            <div class="footer-pattern"></div>
+            <div class="footer-content">
+                <div class="footer-logo">JEJARING SOSIAL</div>
+                <div class="social-links">
+                    <a href="#" class="social-link text-white"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link text-white"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-link text-white"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link text-white"><i class="fab fa-tiktok"></i></a>
+                </div>
+                <div class="footer-tagline">TEMPAT BERTEMU DAN BERINTERAKSI</div>
+                <div class="footer-location"><i class="fas fa-map-marker-alt"></i> Badhogan & Ombenan</div>
+                <div class="footer-nav">
+                    <a href="#">Home</a>
+                    <a href="#">About Us</a>
+                    <a href="#">Menu</a>
+                    <a href="#">Contact</a>
+                    <a href="#">Reservations</a>
+                </div>
+                <div class="copyright">© 2025 Kedai Jejaring Sosial. All rights reserved.</div>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Scroll to top button -->
+    <div class="scroll-top" id="scrollTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // Tab navigation
+        function openTab(tabName) {
+            // Hide all tab contents
+            var tabContents = document.getElementsByClassName("tab-content");
+            for (var i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            // Remove active class from all tabs
+            var tabs = document.getElementsByClassName("menu-tab");
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove("active");
+            }
+            
+            // Show the selected tab content and add active class to the clicked tab
+            document.getElementById(tabName).classList.add("active");
+            
+            // Find the tab that was clicked and add active class
+            var allTabs = document.getElementsByClassName("menu-tab");
+            for (var i = 0; i < allTabs.length; i++) {
+                if (allTabs[i].getAttribute("onclick") === `openTab('${tabName}')`) {
+                    allTabs[i].classList.add("active");
+                    break;
+                }
+            }
+        }
+        
+        // Sticky navigation
+        window.onscroll = function() {
+            var nav = document.querySelector('.nav-container');
+            var scrollTop = document.getElementById('scrollTop');
+            
+            if (window.pageYOffset > nav.offsetTop) {
+                nav.classList.add('sticky');
+            } else {
+                nav.classList.remove('sticky');
+            }
+            
+            // Show/hide scroll to top button
+            if (window.pageYOffset > 300) {
+                scrollTop.classList.add('active');
+            } else {
+                scrollTop.classList.remove('active');
+            }
+        };
+        
+        // Scroll to top functionality
+        document.getElementById('scrollTop').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Coffee beans animation
+        function createFloatingBeans() {
+            const beanContainer = document.getElementById('beanContainer');
+            const numBeans = 15;
+            
+            for (let i = 0; i < numBeans; i++) {
+                const bean = document.createElement('div');
+                bean.classList.add('floating-bean');
+                
+                // Random positioning
+                bean.style.top = Math.random() * 100 + 'vh';
+                bean.style.left = Math.random() * 100 + 'vw';
+                
+                // Random size
+                const size = Math.random() * 20 + 15;
+                bean.style.width = size + 'px';
+                bean.style.height = size + 'px';
+                
+                // Random rotation
+                bean.style.transform = `rotate(${Math.random() * 360}deg)`;
+                
+                // Random animation duration and delay
+                const duration = Math.random() * 10 + 10;
+                const delay = Math.random() * 5;
+                bean.style.animation = `floatBean ${duration}s linear ${delay}s infinite`;
+                
+                beanContainer.appendChild(bean);
+            }
+        }
+        
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', function() {
+            createFloatingBeans();
+        });
+    </script>
+</body>
+</html>
