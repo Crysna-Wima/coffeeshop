@@ -40,7 +40,7 @@
         }
 
         .cafe-container {
-            max-width: 1200px;
+            max-width: 100%;
             margin: 0 auto;
             background-color: white;
             box-shadow: 0 10px 40px rgba(0,0,0,0.1);
@@ -795,6 +795,33 @@
             opacity: 0.15;
             z-index: 0;
             animation: floatBean 15s linear infinite;
+        }
+
+        @media (max-width: 768px) {
+            .menu-tabs {
+                display: flex;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch; /* Smooth scrolling di iOS */
+                scroll-snap-type: x mandatory;
+                padding-bottom: 0.5rem; /* Ruang untuk scrollbar */
+            }
+            
+            .menu-tab {
+                scroll-snap-align: start;
+                flex: 0 0 auto; /* Tidak flex, ukuran sesuai konten */
+                padding: 1rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            
+            /* Style scrollbar (opsional) */
+            .menu-tabs::-webkit-scrollbar {
+                height: 4px;
+            }
+            
+            .menu-tabs::-webkit-scrollbar-thumb {
+                background-color: var(--accent);
+                border-radius: 2px;
+            }
         }
 
         @keyframes floatBean {
